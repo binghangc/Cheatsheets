@@ -35,3 +35,6 @@
 *.fmt
 *.pyg
 _minted*/
+
+.DS_Store
+.vscode/

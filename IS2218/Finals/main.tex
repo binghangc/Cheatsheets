@@ -2,7 +2,6 @@
 % Overleaf: upload this file and use the default pdfLaTeX compiler.
 % Self-contained: no external images, fonts or data files are required.
 
-
 \documentclass[a4paper,landscape,10pt]{article}
 % Change margin here; all column widths adjust automatically.
 \usepackage[margin=4mm,includefoot,footskip=9pt]{geometry}
@@ -38,14 +37,17 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\major}[1]{\par\addvspace{5pt}\begingroup
   \color{ink}\bfseries\fontsize{10.8}{11.8}\selectfont #1\par
-  \vspace{2pt}{\color{rulecolor}\hrule height .4pt}\endgroup\nobreak\vspace{2.5pt}}
+\vspace{2pt}{\color{rulecolor}\hrule height .4pt}\endgroup\nobreak\vspace{2.5pt}}
 \newcommand{\minor}[1]{\par\addvspace{4pt}{\color{accent}\bfseries\fontsize{8.8}{9.7}\selectfont #1}\par\nobreak\vspace{1pt}}
 \newcommand{\term}[1]{{\bfseries #1}}
-\newcommand{\eq}[1]{\par\begingroup\color{formula}\centering\vspace{1pt}\begin{adjustbox}{max width=\linewidth}$\displaystyle #1$\end{adjustbox}\par\vspace{1.5pt}\endgroup}
+\newcommand{\eq}[1]{\par\begingroup\color{formula}\centering\vspace{1pt}
+  \begin{adjustbox}{max width=\linewidth}$\displaystyle #1$
+\end{adjustbox}\par\vspace{1.5pt}\endgroup}
 \newcommand{\keyeq}[1]{\par\begingroup\color{formula}\setlength{\fboxsep}{2.7pt}\centering\vspace{1pt}%
   \colorbox{panel}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{%
-    \begin{adjustbox}{max width=\dimexpr\linewidth-4\fboxsep\relax}$\displaystyle #1$\end{adjustbox}}}%
-  \par\vspace{2pt}\endgroup}
+      \begin{adjustbox}{max width=\dimexpr\linewidth-4\fboxsep\relax}$\displaystyle #1$
+  \end{adjustbox}}}%
+\par\vspace{2pt}\endgroup}
 \newcommand{\txt}[1]{\text{#1}}
 \newcommand{\arr}{\(\rightarrow\)}
 \newcommand{\colfont}{\fontsize{8.2}{9.25}\selectfont\color{ink}\RaggedRight}
@@ -55,8 +57,8 @@
 \newcommand{\showcheatcols}{%
   \typeout{COLUMN HEIGHTS: left=\the\dimexpr\ht\leftcol+\dp\leftcol\relax;
     middle=\the\dimexpr\ht\midcol+\dp\midcol\relax;
-    right=\the\dimexpr\ht\rightcol+\dp\rightcol\relax}%
-  \noindent\usebox{\leftcol}\hfill\usebox{\midcol}\hfill\usebox{\rightcol}\par}
+  right=\the\dimexpr\ht\rightcol+\dp\rightcol\relax}%
+\noindent\usebox{\leftcol}\hfill\usebox{\midcol}\hfill\usebox{\rightcol}\par}
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
@@ -66,307 +68,315 @@
 \setlength{\footskip}{9pt}
 \AtBeginDocument{\colfont
   \setlength{\abovedisplayskip}{2pt}
-  \setlength{\belowdisplayskip}{2pt}}
+\setlength{\belowdisplayskip}{2pt}}
 
 \begin{document}
 
 % ============================= PAGE 1 =============================
-\sbox{\leftcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Time Value of Money}
-\term{Notation:} \(PV\): present value; \(FV_t\): future value after \(t\) periods;
-\(C\): cash payment per period; \(r\): interest rate per period.
+\sbox{\leftcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Time Value of Money}
+    \term{Notation:} \(PV\): present value; \(FV_t\): future value after \(t\) periods;
+    \(C\): cash payment per period; \(r\): interest rate per period.
 
-\term{5.1 Future value}
-\eq{FV_t=PV(1+r)^t}
-\term{5.2 Present value}
-\eq{PV=\frac{FV_t}{(1+r)^t}}
-\term{5.3 Present value of a perpetuity}
-\eq{PV_{\txt{perpetuity}}=\frac{C}{r}}
-A stream of cash payments that never ends.
+    \term{5.1 Future value}
+    \eq{FV_t=PV(1+r)^t}
+    \term{5.2 Present value}
+    \eq{PV=\frac{FV_t}{(1+r)^t}}
+    \term{5.3 Present value of a perpetuity}
+    \eq{PV_{\txt{perpetuity}}=\frac{C}{r}}
+    A stream of cash payments that never ends.
 
-\term{5.4 Present value of a \(t\)-year ordinary annuity}
-\keyeq{PV_{\txt{annuity}}=C\left[\frac1r-\frac{1}{r(1+r)^t}\right]
- =C\frac{1-(1+r)^{-t}}r}
-\term{5.5 Future value of an ordinary annuity}
-\keyeq{FV_{\txt{annuity}}=PV_{\txt{annuity}}(1+r)^t
- =C\frac{(1+r)^t-1}{r}}
-For the source's annuity of \$1 a year, set \(C=1\).
+    \term{5.4 Present value of a \(t\)-year ordinary annuity}
+    \keyeq{PV_{\txt{annuity}}=C\left[\frac1r-\frac{1}{r(1+r)^t}\right]
+    =C\frac{1-(1+r)^{-t}}r}
+    \term{5.5 Future value of an ordinary annuity}
+    \keyeq{FV_{\txt{annuity}}=PV_{\txt{annuity}}(1+r)^t
+    =C\frac{(1+r)^t-1}{r}}
+    For the source's annuity of \$1 a year, set \(C=1\).
 
-\term{Annuity due:} a stream of cash payments starting immediately.
-\eq{\begin{aligned}
-\txt{5.6}\quad PV_{\txt{due}}&=PV_{\txt{ordinary annuity}}(1+r)\\
-\txt{5.7}\quad FV_{\txt{due}}&=FV_{\txt{ordinary annuity}}(1+r)
-\end{aligned}}
-\term{5.8--5.9 Fisher equation}
-\eq{1+r_{\txt{real}}=\frac{1+r_{\txt{nominal}}}{1+\pi}}
-\eq{r_{\txt{real}}\approx r_{\txt{nominal}}-\pi}
-Here \(\pi\) is the inflation rate.
-\eq{\txt{EAR}=(1+MR)^{12}-1\qquad \txt{APR}=12MR}
-\(MR\): monthly interest rate.
-\begin{itemize}
-\item \term{Present value:} value today of a future cash flow.
-\item \term{Discount factor:} present value of a \$1 future payment.
-\item \term{Discount rate:} rate used to compute PVs of future cash flows.
-\item \term{Effective annual interest rate:} annualized using compound interest.
-\item \term{Annual percentage rate:} annualized using simple interest.
-\item \term{Inflation:} rate at which prices as a whole are increasing.
-\item \term{Nominal interest rate:} rate at which money invested grows.
-\item \term{Real interest rate:} rate at which the purchasing power of an investment increases.
-\item Current-dollar cash flows must be discounted by the nominal interest rate.
-\item Real cash flows must be discounted by the real interest rate.
-\end{itemize}
+    \term{Annuity due:} a stream of cash payments starting immediately.
+    \eq{
+      \begin{aligned}
+        \txt{5.6}\quad PV_{\txt{due}}&=PV_{\txt{ordinary annuity}}(1+r)\\
+        \txt{5.7}\quad FV_{\txt{due}}&=FV_{\txt{ordinary annuity}}(1+r)
+    \end{aligned}}
+    \term{5.8--5.9 Fisher equation}
+    \eq{1+r_{\txt{real}}=\frac{1+r_{\txt{nominal}}}{1+\pi}}
+    \eq{r_{\txt{real}}\approx r_{\txt{nominal}}-\pi}
+    Here \(\pi\) is the inflation rate.
+    \eq{\txt{EAR}=(1+MR)^{12}-1\qquad \txt{APR}=12MR}
+    \(MR\): monthly interest rate.
+    \begin{itemize}
+      \item \term{Present value:} value today of a future cash flow.
+      \item \term{Discount factor:} present value of a \$1 future payment.
+      \item \term{Discount rate:} rate used to compute PVs of future cash flows.
+      \item \term{Effective annual interest rate:} annualized using compound interest.
+      \item \term{Annual percentage rate:} annualized using simple interest.
+      \item \term{Inflation:} rate at which prices as a whole are increasing.
+      \item \term{Nominal interest rate:} rate at which money invested grows.
+      \item \term{Real interest rate:} rate at which the purchasing power of an investment increases.
+      \item Current-dollar cash flows must be discounted by the nominal interest rate.
+      \item Real cash flows must be discounted by the real interest rate.
+    \end{itemize}
 
-\major{Marketing}
-\minor{Marketing Fundamentals}
-\begin{itemize}
-\item \term{Needs:} states of felt deprivation; basic requirements to survive.
-\item \term{Wants:} needs shaped by society, culture and personality.
-\item \term{Demands:} wants backed by buying power.
-\item \term{Marketing:} delivering value to customers and, in turn, capturing value from customers.
-\item \term{Marketing myopia:} focusing on current wants instead of underlying needs.
-\end{itemize}
+    \major{Marketing}
+    \minor{Marketing Fundamentals}
+    \begin{itemize}
+      \item \term{Needs:} states of felt deprivation; basic requirements to survive.
+      \item \term{Wants:} needs shaped by society, culture and personality.
+      \item \term{Demands:} wants backed by buying power.
+      \item \term{Marketing:} delivering value to customers and, in turn, capturing value from customers.
+      \item \term{Marketing myopia:} focusing on current wants instead of underlying needs.
+    \end{itemize}
 \end{minipage}}
 
-\sbox{\midcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Marketing and Relationships}
-\minor{Marketing Concepts}
-{\fontsize{7.1}{8.05}\selectfont\renewcommand{\arraystretch}{1.1}
-\arrayrulecolor{rulecolor}
-\begin{tabularx}{\linewidth}{@{}p{14mm}Y Y Y@{}}
-\rowcolor{highlight}\color{ink}\term{Concept}&\color{ink}\term{Feature of products}&\color{ink}\term{Organisational implications}&\color{ink}\term{Evaluation}\\
-\term{Production}&Easily available and highly affordable&Improve production and distribution efficiency&Demand \(>\) supply; economies of scale and experience curve; assembly lines.\\\hline
-\term{Product}&Quality, performance, features&Product innovation&Marketing myopia: focus on improving products instead of solutions.\\\hline
-\term{Selling}&Not bought unless stimulated aggressively&Selling and promotion&``Hard sell''; unscrupulous image; focus on sales volume.\\\hline
-\term{Marketing}&Meets consumers' needs and wants&Understand target markets&``Sense and respond'' instead of ``make and sell''; focus on customer satisfaction.\\\hline
-\end{tabularx}}
+\sbox{\midcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Marketing and Relationships}
+    \minor{Marketing Concepts}
+    {\fontsize{7.1}{8.05}\selectfont\renewcommand{\arraystretch}{1.1}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}p{14mm}Y Y Y@{}}
+        \rowcolor{highlight}\color{ink}\term{Concept}&\color{ink}\term{Feature of products}&\color{ink}\term{Organisational implications}&\color{ink}\term{Evaluation}\\
+        \term{Production}&Easily available and highly affordable&Improve production and distribution efficiency&Demand \(>\) supply; economies of scale and experience curve; assembly lines.\\\hline
+        \term{Product}&Quality, performance, features&Product innovation&Marketing myopia: focus on improving products instead of solutions.\\\hline
+        \term{Selling}&Not bought unless stimulated aggressively&Selling and promotion&``Hard sell''; unscrupulous image; focus on sales volume.\\\hline
+        \term{Marketing}&Meets consumers' needs and wants&Understand target markets&``Sense and respond'' instead of ``make and sell''; focus on customer satisfaction.\\\hline
+    \end{tabularx}}
 
-\minor{Customer Driven vs Customer Driving}
-\begin{itemize}
-\item \term{Customer driven:} understand customers deeply and what they want \arr\ create products that meet current needs.
-\item \term{Customer driving:} understand customers' needs better than they do themselves \arr\ create products that meet needs now and in the future.
-\end{itemize}
+    \minor{Customer Driven vs Customer Driving}
+    \begin{itemize}
+      \item \term{Customer driven:} understand customers deeply and what they want \arr\ create products that meet current needs.
+      \item \term{Customer driving:} understand customers' needs better than they do themselves \arr\ create products that meet needs now and in the future.
+    \end{itemize}
 
-\minor{Customer Relationship Management (CRM)}
-\begin{itemize}
-\item Building and maintaining profitable customer relationships by delivering superior customer value and satisfaction.
-\item Not everyone is a desirable customer.
-\item Attract, keep and grow profitable customers.
-\end{itemize}
+    \minor{Customer Relationship Management (CRM)}
+    \begin{itemize}
+      \item Building and maintaining profitable customer relationships by delivering superior customer value and satisfaction.
+      \item Not everyone is a desirable customer.
+      \item Attract, keep and grow profitable customers.
+    \end{itemize}
 
-\minor{Customer Relationship Groups}
-{\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.12}
-\arrayrulecolor{rulecolor}
-\begin{tabularx}{\linewidth}{@{}p{12mm}Y Y@{}}
-\rowcolor{tablehead}\color{ink}\term{Profit}&\color{ink}\term{Short-term customers}&\color{ink}\term{Long-term customers}\\
-\rowcolor{tablerow}\term{High}&\term{Butterflies}\newline Good fit between the company's offerings and customers' needs; high profit potential.\newline Enjoy their business; use promotion to attract them; do not invest further until next time.&\term{True friends}\newline Good fit between the company's offerings and customers' needs; highest profit potential.\newline Invest in the relationship; nurture them into true believers.\\
-\term{Low}&\term{Strangers}\newline Little fit between the company's offerings and customers' needs; lowest profit potential.\newline Do not invest in them.&\term{Barnacles}\newline Limited fit between the company's offerings and customers' needs; low profit potential.\newline Improve profitability by charging more; if not profitable, ``fire'' them.\\\hline
-\end{tabularx}}
+    \minor{Customer Relationship Groups}
+    {\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.12}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}p{12mm}Y Y@{}}
+        \rowcolor{tablehead}\color{ink}\term{Profit}&\color{ink}\term{Short-term customers}&\color{ink}\term{Long-term customers}\\
+        \rowcolor{tablerow}\term{High}&\term{Butterflies}\newline Good fit between the company's offerings and customers' needs; high profit potential.\newline Enjoy their business; use promotion to attract them; do not invest further until next time.&\term{True friends}\newline Good fit between the company's offerings and customers' needs; highest profit potential.\newline Invest in the relationship; nurture them into true believers.\\
+        \term{Low}&\term{Strangers}\newline Little fit between the company's offerings and customers' needs; lowest profit potential.\newline Do not invest in them.&\term{Barnacles}\newline Limited fit between the company's offerings and customers' needs; low profit potential.\newline Improve profitability by charging more; if not profitable, ``fire'' them.\\\hline
+    \end{tabularx}}
 
-\minor{Marketing Process}
-\begin{enumerate}
-\item Understand the marketplace: customer needs and wants.
-\item Design a customer-driven marketing strategy.
-\item Construct a marketing programme that delivers superior value: the 4Ps.
-\item Build profitable relationships and create customer delight: CRM and partner relationship management.
-\item Capture value from customers to create profits and customer equity.
-\end{enumerate}
+    \minor{Marketing Process}
+    \begin{enumerate}
+      \item Understand the marketplace: customer needs and wants.
+      \item Design a customer-driven marketing strategy.
+      \item Construct a marketing programme that delivers superior value: the 4Ps.
+      \item Build profitable relationships and create customer delight: CRM and partner relationship management.
+      \item Capture value from customers to create profits and customer equity.
+    \end{enumerate}
 
 \end{minipage}}
 
-\sbox{\rightcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Market Strategy and Value}
-\minor{Segmentation, Targeting, Positioning (STP)}
-\begin{enumerate}
-\item \term{Segmentation:} divide the market into smaller groups with distinct needs, characteristics or behaviours that might require separate products or marketing mixes. A market segment consists of consumers who respond similarly to a given set of marketing efforts.
-\item \term{Targeting:} evaluate each market segment's attractiveness and select one or more segments to enter.
-\item \term{Positioning:}
-  \begin{itemize}
-  \item \term{Differentiation:} differentiate the market offering to create superior customer value.
-  \item \term{Positioning:} arrange for a product to occupy a clear, distinctive and desirable place relative to competing products in the minds of target consumers.
-  \end{itemize}
-\end{enumerate}
+\sbox{\rightcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Market Strategy and Value}
+    \minor{Segmentation, Targeting, Positioning (STP)}
+    \begin{enumerate}
+      \item \term{Segmentation:} divide the market into smaller groups with distinct needs, characteristics or behaviours that might require separate products or marketing mixes. A market segment consists of consumers who respond similarly to a given set of marketing efforts.
+      \item \term{Targeting:} evaluate each market segment's attractiveness and select one or more segments to enter.
+      \item \term{Positioning:}
+        \begin{itemize}
+          \item \term{Differentiation:} differentiate the market offering to create superior customer value.
+          \item \term{Positioning:} arrange for a product to occupy a clear, distinctive and desirable place relative to competing products in the minds of target consumers.
+        \end{itemize}
+    \end{enumerate}
 
-\minor{Delivering Customer Value}
-\begin{enumerate}
-\item \term{Operational excellence:} cheap, reliable products.
-\item \term{Product leadership:} leading products.
-\item \term{Customer intimacy:} tailor offerings to meet the demands of segmented markets.
-\end{enumerate}
-Aim to be best at one and meet the standard in the other two.
+    \minor{Delivering Customer Value}
+    \begin{enumerate}
+      \item \term{Operational excellence:} cheap, reliable products.
+      \item \term{Product leadership:} leading products.
+      \item \term{Customer intimacy:} tailor offerings to meet the demands of segmented markets.
+    \end{enumerate}
+    Aim to be best at one and meet the standard in the other two.
 
-\minor{Business Models}
-\term{Product-centric business models}
-\begin{itemize}
-\item Create a great product and produce it at scale.
-\item KPIs include market share and number of new products.
-\item Growth engines: new products and new markets.
-\item Issues: shorter product life cycles; increased competition due to the internet and globalisation; a move from selling products to solutions.
-\end{itemize}
-\term{Customer-centric business models}
-\begin{itemize}
-\item Identify the most valuable customers; maximise their long-term value, rather than necessarily the additional margin of their current purchase. Build relationships and look to the future.
-\item \term{Customer acquisition:} who are the ideal customers to acquire, and how much should be spent?
-\item \term{Customer retention:} should every customer be retained?
-\item \term{Customer development:} which customers are best to develop further?
-\end{itemize}
+    \minor{Business Models}
+    \term{Product-centric business models}
+    \begin{itemize}
+      \item Create a great product and produce it at scale.
+      \item KPIs include market share and number of new products.
+      \item Growth engines: new products and new markets.
+      \item Issues: shorter product life cycles; increased competition due to the internet and globalisation; a move from selling products to solutions.
+    \end{itemize}
+    \term{Customer-centric business models}
+    \begin{itemize}
+      \item Identify the most valuable customers; maximise their long-term value, rather than necessarily the additional margin of their current purchase. Build relationships and look to the future.
+      \item \term{Customer acquisition:} who are the ideal customers to acquire, and how much should be spent?
+      \item \term{Customer retention:} should every customer be retained?
+      \item \term{Customer development:} which customers are best to develop further?
+    \end{itemize}
 
-\minor{Marketing Management Process}
-\begin{enumerate}
-\item \term{Analyse and identify market opportunities:} marketing research and information systems; marketing environmental scanning; consumer and business markets.
-\item \term{Research and select target markets:} measuring and forecasting demand; market segmentation, targeting and positioning.
-\item \term{Develop the marketing mix (4Ps):} produce the response the firm wants in the target market. \emph{Product, Price, Promotion, Place/Distribution.}
-\item \term{Manage the marketing effort:} analysis (SWOT); planning (setting objectives and strategy); implementation (turning marketing strategies into marketing actions); control (evaluating results and taking corrective action).
-\end{enumerate}
+    \minor{Marketing Management Process}
+    \begin{enumerate}
+      \item \term{Analyse and identify market opportunities:} marketing research and information systems; marketing environmental scanning; consumer and business markets.
+      \item \term{Research and select target markets:} measuring and forecasting demand; market segmentation, targeting and positioning.
+      \item \term{Develop the marketing mix (4Ps):} produce the response the firm wants in the target market. \emph{Product, Price, Promotion, Place/Distribution.}
+      \item \term{Manage the marketing effort:} analysis (SWOT); planning (setting objectives and strategy); implementation (turning marketing strategies into marketing actions); control (evaluating results and taking corrective action).
+    \end{enumerate}
 \end{minipage}}
 \showcheatcols
 \newpage
 
 % ============================= PAGE 2 =============================
-\sbox{\leftcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Customer Lifetime Value}
-\minor{CLV}
-The dollar value of a customer relationship: the net present value of all future cash flows from that relationship. Use past customer data to predict the future. Useful for deciding how much to spend on acquisition and retention.
-\keyeq{\mathrm{CLV}=(M-R)\frac{1+d}{1+d-r}}
-\term{Revenue obtained after service is delivered:}
-\keyeq{\mathrm{CLV}=(M-R)\frac{r}{1+d-r}}
-\begin{itemize}
-\item \(M\): margin from each customer (revenue minus variable cost).
-\item \(R\): retention spending.
-\item \(r\): retention rate; \(d\): discount rate.
-\item \term{Survival rate:} probability that the customer has a relationship in period \(t\):
-\end{itemize}
-\eq{\Pr(\txt{relationship in period }t)=r^{t-1}}
+\sbox{\leftcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Customer Lifetime Value}
+    \minor{CLV}
+    The dollar value of a customer relationship: the net present value of all future cash flows from that relationship. Use past customer data to predict the future. Useful for deciding how much to spend on acquisition and retention.
+    \keyeq{\mathrm{CLV}=(M-R)\frac{1+d}{1+d-r}}
+    \term{Revenue obtained after service is delivered:}
+    \keyeq{\mathrm{CLV}=(M-R)\frac{r}{1+d-r}}
+    \begin{itemize}
+      \item \(M\): margin from each customer (revenue minus variable cost).
+      \item \(R\): retention spending.
+      \item \(r\): retention rate; \(d\): discount rate.
+      \item \term{Survival rate:} probability that the customer has a relationship in period \(t\):
+    \end{itemize}
+    \eq{\Pr(\txt{relationship in period }t)=r^{t-1}}
 
-\minor{CLV Extension}
-\begin{enumerate}
-\item \term{Duration:} low retention and a high discount rate \arr\ CLV is achieved in the first few periods. High retention and a low discount rate \arr\ less CLV is achieved in the first few periods.
-\item Retention rates increase over time. Calculate CLV among customers in the same cohort.
-\item For businesses without formal subscriptions, use other methods to evaluate the retention rate and then calculate CLV.
-\end{enumerate}
+    \minor{CLV Extension}
+    \begin{enumerate}
+      \item \term{Duration:} low retention and a high discount rate \arr\ CLV is achieved in the first few periods. High retention and a low discount rate \arr\ less CLV is achieved in the first few periods.
+      \item Retention rates increase over time. Calculate CLV among customers in the same cohort.
+      \item For businesses without formal subscriptions, use other methods to evaluate the retention rate and then calculate CLV.
+    \end{enumerate}
 
-\minor{CLV and Managerial Decisions}
-\begin{enumerate}
-\item \term{Targeting market segments:}
-\end{enumerate}
-\eq{\begin{aligned}
-\mathrm{CLV}(\txt{segment})&=\mathrm{CLV}(\txt{average customer})\\
-&\quad\times\txt{number of customers in segment}
-\end{aligned}}
-Decide marketing spending based on this.
-\begin{enumerate}[start=2]
-\item \term{Marketing expenditure for a particular customer:} how much is the customer worth? Fire customers with negative CLV.
-\item \term{Customer acquisition:} spending should be less than the CLV of the particular customer.
-\item \term{Customer retention:} spending should be less than the increase in CLV achieved by retaining the customer.
-\item \term{Margin expansion:} up-selling (encourage purchase of a more expensive product), cross-selling (encourage purchase of a related product), and cost cutting (reduce unnecessary expenses) should produce enough CLV to cover the investment costs.
-\end{enumerate}
+    \minor{CLV and Managerial Decisions}
+    \begin{enumerate}
+      \item \term{Targeting market segments:}
+    \end{enumerate}
+    \eq{
+      \begin{aligned}
+        \mathrm{CLV}(\txt{segment})&=\mathrm{CLV}(\txt{average customer})\\
+        &\quad\times\txt{number of customers in segment}
+    \end{aligned}}
+    Decide marketing spending based on this.
+    \begin{enumerate}[start=2]
+      \item \term{Marketing expenditure for a particular customer:} how much is the customer worth? Fire customers with negative CLV.
+      \item \term{Customer acquisition:} spending should be less than the CLV of the particular customer.
+      \item \term{Customer retention:} spending should be less than the increase in CLV achieved by retaining the customer.
+      \item \term{Margin expansion:} up-selling (encourage purchase of a more expensive product), cross-selling (encourage purchase of a related product), and cost cutting (reduce unnecessary expenses) should produce enough CLV to cover the investment costs.
+    \end{enumerate}
 
-\major{Pricing}
-\minor{Concept}
-\begin{itemize}
-\item Sum of the values consumers exchange for the benefits of having or using a product.
-\item Amount of money charged for a product.
-\item \term{Importance:}
-  \begin{enumerate}
-  \item Most tactical (instant) of the 4Ps.
-  \item The only P producing revenue.
-  \item Inflation increases prices; recession lowers prices.
-  \item Dynamic: allows flexible adjustments.
-  \end{enumerate}
-\end{itemize}
+    \major{Pricing}
+    \minor{Concept}
+    \begin{itemize}
+      \item Sum of the values consumers exchange for the benefits of having or using a product.
+      \item Amount of money charged for a product.
+      \item \term{Importance:}
+        \begin{enumerate}
+          \item Most tactical (instant) of the 4Ps.
+          \item The only P producing revenue.
+          \item Inflation increases prices; recession lowers prices.
+          \item Dynamic: allows flexible adjustments.
+        \end{enumerate}
+    \end{itemize}
 
 \end{minipage}}
 
-\sbox{\midcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Pricing: Factors and Launch}
-\minor{Factors Affecting Pricing}
-\term{Internal}
-\begin{enumerate}
-\item \term{Marketing objectives:} survival; current profit maximisation; market-share leadership; product-quality leadership; competitive entry barriers; reseller support; cost recovery (non-profit and public firms).
-\item \term{Marketing mix strategy:} product design, distribution, promotion, price versus non-price competition, parallel importers.
-\item \term{Cost:} costs \arr\ floor price; demand \arr\ ceiling price. Types of cost:
-  \begin{itemize}
-  \item Fixed: do not change with production/sales volume.
-  \item Variable: change directly with production.
-  \item Total: fixed plus variable.
-  \item Average: total divided by quantity.
-  \item Marginal: cost of producing one additional unit.
-  \end{itemize}
-\item \term{Organisation for pricing:} who sets the price?
-\end{enumerate}
-\term{External}
-\begin{enumerate}
-\item \term{Nature of market and demand:} forms of competition: pure (many, identical), monopolistic (many, different), oligopolistic (few, high entry barriers), monopoly (one, unique). Price elasticity of demand: elastic versus inelastic demand. Cross-elasticity: substitute and complementary products.
-\item \term{Consumer perceptions:} price--quality relationship; perceived connection between a product's price and quality. Consumers rely on price as an indicator of quality.
-\item \term{Competition:} reference point (benchmark to compare price); responsiveness (how quickly the firm reacts to competitors/market changes); product homogeneity (similarity): greater price sensitivity.
-\item \term{Environmental factors:} economic conditions, distributor reactions and government.
-\end{enumerate}
+\sbox{\midcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Pricing: Factors and Launch}
+    \minor{Factors Affecting Pricing}
+    \term{Internal}
+    \begin{enumerate}
+      \item \term{Marketing objectives:} survival; current profit maximisation; market-share leadership; product-quality leadership; competitive entry barriers; reseller support; cost recovery (non-profit and public firms).
+      \item \term{Marketing mix strategy:} product design, distribution, promotion, price versus non-price competition, parallel importers.
+      \item \term{Cost:} costs \arr\ floor price; demand \arr\ ceiling price. Types of cost:
+        \begin{itemize}
+          \item Fixed: do not change with production/sales volume.
+          \item Variable: change directly with production.
+          \item Total: fixed plus variable.
+          \item Average: total divided by quantity.
+          \item Marginal: cost of producing one additional unit.
+        \end{itemize}
+      \item \term{Organisation for pricing:} who sets the price?
+    \end{enumerate}
+    \term{External}
+    \begin{enumerate}
+      \item \term{Nature of market and demand:} forms of competition: pure (many, identical), monopolistic (many, different), oligopolistic (few, high entry barriers), monopoly (one, unique). Price elasticity of demand: elastic versus inelastic demand. Cross-elasticity: substitute and complementary products.
+      \item \term{Consumer perceptions:} price--quality relationship; perceived connection between a product's price and quality. Consumers rely on price as an indicator of quality.
+      \item \term{Competition:} reference point (benchmark to compare price); responsiveness (how quickly the firm reacts to competitors/market changes); product homogeneity (similarity): greater price sensitivity.
+      \item \term{Environmental factors:} economic conditions, distributor reactions and government.
+    \end{enumerate}
 
-\minor{New Product Pricing Strategy}
-\term{Price Skimming}
-\begin{itemize}
-\item Set a high initial price to capture maximum revenue. Gradually reduce it to attract more price-sensitive customers, ``skimming'' revenue from different segments layer by layer.
-\item Make fewer but more profitable sales at the beginning, then progressively reach other segments as the price falls.
-\item \term{When to use:}
-  \begin{enumerate}
-  \item Clear market segmentation based on price sensitivity.
-  \item Supportive image: a good brand image.
-  \item Safety/hedge: high initial margins provide a financial cushion.
-  \item Costs of smaller volumes must not cancel the advantage of charging more; small-quantity production costs must be manageable.
-  \item No immediate competition: few or no competitors.
-  \end{enumerate}
-\end{itemize}
-\term{Price Penetration}
-\begin{itemize}
-\item Set a low initial price to penetrate the market quickly and deeply.
-\item Attract many buyers quickly and win a large market share.
-\item \term{When to use:} consumers are price sensitive; experience-curve effects operate (a steep curve: costs drop quickly as production increases, allowing low prices and profitability as volume grows); potential competition.
-\end{itemize}
+    \minor{New Product Pricing Strategy}
+    \term{Price Skimming}
+    \begin{itemize}
+      \item Set a high initial price to capture maximum revenue. Gradually reduce it to attract more price-sensitive customers, ``skimming'' revenue from different segments layer by layer.
+      \item Make fewer but more profitable sales at the beginning, then progressively reach other segments as the price falls.
+      \item \term{When to use:}
+        \begin{enumerate}
+          \item Clear market segmentation based on price sensitivity.
+          \item Supportive image: a good brand image.
+          \item Safety/hedge: high initial margins provide a financial cushion.
+          \item Costs of smaller volumes must not cancel the advantage of charging more; small-quantity production costs must be manageable.
+          \item No immediate competition: few or no competitors.
+        \end{enumerate}
+    \end{itemize}
+    \term{Price Penetration}
+    \begin{itemize}
+      \item Set a low initial price to penetrate the market quickly and deeply.
+      \item Attract many buyers quickly and win a large market share.
+      \item \term{When to use:} consumers are price sensitive; experience-curve effects operate (a steep curve: costs drop quickly as production increases, allowing low prices and profitability as volume grows); potential competition.
+    \end{itemize}
 \end{minipage}}
 
-\sbox{\rightcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
-\major{Pricing: Strategies and Methods}
-\minor{Pricing Strategies}
-\term{Cost-oriented}
-\begin{enumerate}
-\item \term{Mark-up pricing based on cost/sales:} add a predetermined percentage to product cost.
-  \begin{itemize}
-  \item Example: 25\% mark-up on a product costing \$1.00:
-    sales price \(=\$1.00\times1.25=\$1.25\).
-  \item Simple and easy to use; equitable for buyer and seller; focuses on cost to the neglect of demand.
-  \end{itemize}
-\item \term{Target-return / target-profit pricing:} a predetermined return on the capital used to produce and market the product; target return based on standard volume.
-\end{enumerate}
-\keyeq{P=DVC+\frac{FC}{X}+\frac{rK}{X}}
-\(P\): price; \(DVC\): direct variable cost; \(FC\): fixed cost; \(X\): standard volume;
-\(r\): desired rate of return; \(K\): capital used.
+\sbox{\rightcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Pricing: Strategies and Methods}
+    \minor{Pricing Strategies}
+    \term{Cost-oriented}
+    \begin{enumerate}
+      \item \term{Mark-up pricing based on cost/sales:} add a predetermined percentage to product cost.
+        \begin{itemize}
+          \item Example: 25\% mark-up on a product costing \$1.00:
+            sales price \(=\$1.00\times1.25=\$1.25\).
+          \item Simple and easy to use; equitable for buyer and seller; focuses on cost to the neglect of demand.
+        \end{itemize}
+      \item \term{Target-return / target-profit pricing:} a predetermined return on the capital used to produce and market the product; target return based on standard volume.
+    \end{enumerate}
+    \keyeq{P=DVC+\frac{FC}{X}+\frac{rK}{X}}
+    \(P\): price; \(DVC\): direct variable cost; \(FC\): fixed cost; \(X\): standard volume;
+    \(r\): desired rate of return; \(K\): capital used.
 
-\term{Demand-oriented}
+    \term{Demand-oriented}
 
-Methods based on, and used to affect, consumer perceptions and behaviour.
-\begin{itemize}
-\item \term{Perceived-value pricing:} price based on the buyer's perception of value. Soundest approach; consistent with the marketing concept.
-\end{itemize}
+    Methods based on, and used to affect, consumer perceptions and behaviour.
+    \begin{itemize}
+      \item \term{Perceived-value pricing:} price based on the buyer's perception of value. Soundest approach; consistent with the marketing concept.
+    \end{itemize}
 
-\minor{Pricing Methods}
-\begin{enumerate}
-\item \term{Price discrimination:} charge different prices to different customers for the same product or service. By time, place or customer (e.g. adults versus children versus senior citizens).
-\item \term{Odd or psychological pricing:} set prices below even-dollar amounts (e.g. \$9.99). Used to connote a lower price level through rounding down.
-\item \term{Loss-leader pricing:} set low prices on selected products to increase sales of other products, store traffic and overall profits; attract consumers.
-\item \term{Optional-product pricing:} sell accessory products with the main product. Allows customers to personalise their purchases; increases firm revenue through accessory sales.
-\item \term{Captive-product pricing:} products that must be used with the main product. The main product is cheap and captive products are expensive (razor-and-razor-blade model).
-\item \term{Bundled pricing:} combine several products and sell the bundle at a reduced price. Promotes sales of products that customers may not usually buy.
-\end{enumerate}
+    \minor{Pricing Methods}
+    \begin{enumerate}
+      \item \term{Price discrimination:} charge different prices to different customers for the same product or service. By time, place or customer (e.g. adults versus children versus senior citizens).
+      \item \term{Odd or psychological pricing:} set prices below even-dollar amounts (e.g. \$9.99). Used to connote a lower price level through rounding down.
+      \item \term{Loss-leader pricing:} set low prices on selected products to increase sales of other products, store traffic and overall profits; attract consumers.
+      \item \term{Optional-product pricing:} sell accessory products with the main product. Allows customers to personalise their purchases; increases firm revenue through accessory sales.
+      \item \term{Captive-product pricing:} products that must be used with the main product. The main product is cheap and captive products are expensive (razor-and-razor-blade model).
+      \item \term{Bundled pricing:} combine several products and sell the bundle at a reduced price. Promotes sales of products that customers may not usually buy.
+    \end{enumerate}
 
-\minor{Experience and Experience Curve}
-\begin{itemize}
-\item \term{Experience:} combined effects of learning, volume, investment and specialisation lead to lower production costs.
-\item The experience curve illustrates the relationship between cumulative production and per-unit costs; it drives prices down.
-\end{itemize}
+    \minor{Experience and Experience Curve}
+    \begin{itemize}
+      \item \term{Experience:} combined effects of learning, volume, investment and specialisation lead to lower production costs.
+      \item The experience curve illustrates the relationship between cumulative production and per-unit costs; it drives prices down.
+    \end{itemize}
 
-% The source screenshots also contain low-resolution illustrative diagrams:
-% (1) economics / accounting / marketing approaches to pricing;
-% (2) an expanded marketing-process infographic.
-% They are omitted at the user's request; text and formula content is retained.
+    % The source screenshots also contain low-resolution illustrative diagrams:
+    % (1) economics / accounting / marketing approaches to pricing;
+    % (2) an expanded marketing-process infographic.
+    % They are omitted at the user's request; text and formula content is retained.
 \end{minipage}}
 \showcheatcols
 \end{document}
