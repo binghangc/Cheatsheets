@@ -1,0 +1,246 @@
+% IS2218 midterms cheatsheet -- monochrome, A4 landscape, one page.
+% Overleaf: upload this file and use the default pdfLaTeX compiler.
+% Self-contained: no external images, fonts or data files are required.
+
+\documentclass[a4paper,landscape,10pt]{article}
+% Change margin here; all column widths adjust automatically.
+\usepackage[margin=4mm,includefoot,footskip=9pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage{array,tabularx,booktabs}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{adjustbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{highlight}{gray}{.92}
+\definecolor{accent}{gray}{.12}
+\definecolor{ink}{gray}{0}
+\definecolor{panel}{gray}{.96}
+\definecolor{rulecolor}{gray}{.76}
+\definecolor{formula}{gray}{0}
+\definecolor{tablehead}{gray}{.90}
+\definecolor{tablerow}{gray}{.97}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\setlength{\tabcolsep}{2.5pt}
+\setlength{\emergencystretch}{1em}
+\setlist[itemize]{label=\textbullet,leftmargin=8pt,labelsep=3pt,itemsep=.6pt,topsep=1.1pt,parsep=0pt,partopsep=0pt}
+\setlist[enumerate]{leftmargin=10pt,labelsep=2pt,itemsep=.6pt,topsep=1.1pt,parsep=0pt,partopsep=0pt}
+\setlist[itemize,2]{leftmargin=8pt,itemsep=.65pt,topsep=.8pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\major}[1]{\par\addvspace{3.5pt}\begingroup
+  \color{ink}\bfseries\fontsize{10.8}{11.8}\selectfont #1\par
+\vspace{2pt}{\color{rulecolor}\hrule height .4pt}\endgroup\nobreak\vspace{1.7pt}}
+\newcommand{\minor}[1]{\par\addvspace{2.5pt}{\color{accent}\bfseries\fontsize{8.8}{9.7}\selectfont #1}\par\nobreak\vspace{1pt}}
+\newcommand{\term}[1]{{\bfseries #1}}
+\newcommand{\eq}[1]{\par\begingroup\color{formula}\centering\vspace{1pt}
+  \begin{adjustbox}{max width=\linewidth}$\displaystyle #1$
+\end{adjustbox}\par\vspace{1pt}\endgroup}
+\newcommand{\keyeq}[1]{\par\begingroup\color{formula}\setlength{\fboxsep}{2pt}\centering\vspace{1pt}%
+  \colorbox{panel}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{%
+      \begin{adjustbox}{max width=\dimexpr\linewidth-4\fboxsep\relax}$\displaystyle #1$
+  \end{adjustbox}}}%
+\par\vspace{1pt}\endgroup}
+\newcommand{\txt}[1]{\text{#1}}
+\newcommand{\arr}{\(\rightarrow\)}
+\newcommand{\colfont}{\fontsize{8.2}{9.25}\selectfont\color{ink}\RaggedRight}
+\newsavebox{\leftcol}
+\newsavebox{\midcol}
+\newsavebox{\rightcol}
+\newcommand{\showcheatcols}{%
+  \typeout{COLUMN HEIGHTS: left=\the\dimexpr\ht\leftcol+\dp\leftcol\relax;
+    middle=\the\dimexpr\ht\midcol+\dp\midcol\relax;
+  right=\the\dimexpr\ht\rightcol+\dp\rightcol\relax}%
+\noindent\usebox{\leftcol}\hfill\usebox{\midcol}\hfill\usebox{\rightcol}\par}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[L]{\fontsize{6}{6.6}\selectfont\color{gray}\href{https://github.com/binghangc/Cheatsheets/tree/main/IS2218/Midterms}{Source: github.com/binghangc/Cheatsheets}}
+\fancyfoot[R]{\fontsize{6}{6.6}\selectfont\color{gray}IS2218  /  MIDTERMS\quad\thepage/1}
+\setlength{\footskip}{9pt}
+\AtBeginDocument{\colfont
+  \setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}}
+
+\begin{document}
+% Transcribed from the original two-page PDF. Compact notation keeps all topics
+% on one page; the design and 4 mm margins follow the finals cheatsheet.
+
+\sbox{\leftcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+\major{Financial Performance Measures}
+\term{Notation:} \(TA\): total assets; \(CA\): current assets; \(CL\): current liabilities;
+\(E\): equity; \(LTD\): long-term debt; \(NI\): net income;
+\(ATOI\): after-tax operating income; \(COGS\): cost of goods sold.
+
+{\fontsize{8}{9}\selectfont\renewcommand{\arraystretch}{1.20}
+\arrayrulecolor{rulecolor}
+\begin{tabularx}{\linewidth}{@{}>{\RaggedRight\arraybackslash}p{28mm}Y@{}}
+\rowcolor{tablehead}\multicolumn{2}{@{}l@{}}{\term{Performance measures}}\\
+Market value added&Market value of equity \(-\) book value of equity.\\
+\rowcolor{tablerow}Market-to-book*&Market value of equity / book value of equity.\\
+\rowcolor{tablehead}\multicolumn{2}{@{}l@{}}{\term{Profitability measures}}\\
+Return on assets (ROA)*&\(ATOI/TA\).\\
+\rowcolor{tablerow}Return on capital (ROC)&\(ATOI/(LTD+E)\).\\
+Return on equity (ROE)*&\(NI/E\).\\
+\rowcolor{tablerow}Economic value added (EVA)&\(ATOI-(\txt{Cost of capital}\times\txt{Capital})\).\\
+\rowcolor{tablehead}\multicolumn{2}{@{}l@{}}{\term{Efficiency measures}}\\
+Asset turnover&Sales / total assets at start of year.\\
+\rowcolor{tablerow}Receivables turnover&Sales / receivables at start of year.\\
+Average collection period&Receivables at start of year / daily sales.\\
+\rowcolor{tablerow}Inventory turnover&COGS / inventory at start of year.\\
+Days in inventory&Inventory at start of year / daily COGS.\\
+\rowcolor{tablerow}Profit margin&\(NI/\txt{Sales}\).\\
+Operating profit margin&\(ATOI/\txt{Sales}\).\\
+\rowcolor{tablehead}\multicolumn{2}{@{}l@{}}{\term{Leverage measures}}\\
+Long-term debt ratio&\(LTD/(LTD+E)\).\\
+\rowcolor{tablerow}Long-term debt--equity&\(LTD/E\).\\
+Total debt ratio&Total liabilities / total assets.\\
+\rowcolor{tablerow}Times interest earned&EBIT / interest payments.\\
+Cash coverage ratio&\((EBIT+\txt{Depreciation})/\txt{Interest}\).\\
+\rowcolor{tablehead}\multicolumn{2}{@{}l@{}}{\term{Liquidity measures}}\\
+NWC to assets&\(NWC/TA\).\\
+\rowcolor{tablerow}Current ratio&\(CA/CL\).\\
+Cash ratio&(Cash \(+\) marketable securities) / \(CL\).\\
+\rowcolor{tablerow}Quick ratio&(Cash \(+\) marketable securities \(+\) receivables) / \(CL\).\\\hline
+\end{tabularx}}
+\term{*} Alternative formulas below / in the next column.
+Daily sales \(=\) annual sales / 365; daily COGS \(=COGS/365\).
+EVA uses monetary units (\$ millions in the source).
+
+\major{Market and Book Value}
+\eq{\txt{Market cap}=\txt{Number of shares}\times\txt{Market price per share}}
+\keyeq{\txt{Market-to-book}=\frac{\txt{Market cap}}{\txt{Book equity}}
+=\frac{\txt{Market price per share}}{\txt{Book value per share}}}
+\eq{\txt{Book value per share}=\frac{\txt{Book equity}}{\txt{Number of shares}}}
+\term{Book value:} accounting / balance-sheet value; backward looking.
+\term{Market value:} current value investors place on equity; forward-looking resale value.
+The source's equity-based ``price per share'' formula is \term{book value per share}.
+\end{minipage}}
+
+\sbox{\midcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\fontsize{8.6}{9.7}\selectfont\setlength{\parskip}{2.6pt}\vspace{0pt}
+\major{Core Equations and Cash Flow}
+\term{Further notation:} \(I\): interest; \(D\): depreciation; \(t\): tax rate;
+\(CFO\): cash flow from operations; \(CFI\): cash flow from investments.
+
+\minor{Income and Tax}
+\eq{EBIT=\txt{Revenue}+\txt{Other income}-\txt{Cost}-D}
+Do \term{not} subtract taxes or interest. Net sales is the revenue line.
+\keyeq{ATOI=EBIT(1-t)=NI+I(1-t)}
+\eq{NI=EBIT-I-\txt{Taxes}\qquad t=\frac{\txt{Taxes}}{EBIT-I}}
+Dividends do \term{not} reduce net income and are not expenses.
+
+\minor{Assets, Capital and Working Capital}
+\eq{TA=\txt{Total liabilities}+E\qquad E=TA-\txt{Total liabilities}}
+\eq{NWC=CA-CL\qquad\txt{Capital}=\txt{Debt}+E}
+\eq{LTD=\txt{Long-term debt ratio}\times(TA-CL)}
+Use \term{total assets}, not current assets, in \(TA-CL=LTD+E\).
+
+\minor{ROA and ROE Decompositions*}
+\eq{ROA=\txt{Asset turnover}\times\txt{Operating margin}=\frac{ATOI}{TA}}
+\keyeq{ROE=\underbrace{\frac{TA}{E}}_{\txt{Leverage}}\times
+\underbrace{\frac{\txt{Sales}}{TA}}_{\txt{Asset turnover}}\times
+\underbrace{\frac{ATOI}{\txt{Sales}}}_{\txt{Operating margin}}\times
+\underbrace{\frac{NI}{ATOI}}_{\txt{Debt burden}}}
+Use consistent asset bases; the ROE product simplifies to \(NI/E\).
+
+\minor{Days in Inventory}
+\eq{\txt{Days in inventory}=\frac{\txt{Inventory}}{COGS/365}
+=\frac{365}{\txt{Inventory turnover}}}
+
+\minor{Operating and Free Cash Flow}
+\eq{CFO=NI+D-\Delta NWC}
+\keyeq{FCF=NI+I+D-\Delta NWC+CFI=I+CFI+CFO}
+FCF follows the source's convention. Investment spending is negative \(CFI\); CapEx is a cash outflow. Operating changes in NWC exclude \term{cash and short-term debt}.
+
+{\fontsize{7.5}{8.5}\selectfont\renewcommand{\arraystretch}{1.05}
+\arrayrulecolor{rulecolor}
+\begin{tabularx}{\linewidth}{@{}Y c Y c@{}}
+\rowcolor{tablehead}\term{Increase in}&\term{FCF}&\term{Increase in}&\term{FCF}\\
+Receivables&\(\downarrow\)&Depreciation&\(\uparrow\)*\\
+\rowcolor{tablerow}Inventory&\(\downarrow\)&CapEx&\(\downarrow\)\\
+Payables&\(\uparrow\)&&\\\hline
+\end{tabularx}}
+\term{AR:} they owe us \arr\ cash tied up. \term{AP:} we owe them \arr\ cash retained.
+\(\uparrow NWC\ \rightarrow\ \downarrow\txt{Cash flow}\).
+\term{*} Depreciation is non-cash; its cash benefit is a tax shield when it reduces tax.
+
+\minor{Earnings, Dividends and Shares}
+\eq{\Delta\txt{Retained earnings}=NI-\txt{Dividends}\qquad EPS=\frac{NI}{\txt{Shares}}}
+No stock issued: the source attributes the equity increase to retained earnings.
+If \(\Delta E=\$210\) and dividends \(=\$100\), then \(NI=\$310\).
+Use \term{net income}, not retained earnings, for EPS.
+\end{minipage}}
+
+\sbox{\rightcol}{\begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+\major{Sample Statements (\$)}
+\minor{Balance Sheet}
+{\fontsize{7.6}{8.5}\selectfont\renewcommand{\arraystretch}{1.18}
+\arrayrulecolor{rulecolor}
+\begin{tabularx}{\linewidth}{@{}Y r Y r@{}}
+\rowcolor{tablehead}\term{Assets}&\term{\$}&\term{Liabilities / equity}&\term{\$}\\
+\term{Current assets}&&\term{Current liabilities}&\\
+Cash&17&Debt due for repayment&27\\
+\rowcolor{tablerow}Receivables&45&Payables&37\\
+Inventories&52&\term{Total current liabilities}&\term{64}\\
+\rowcolor{tablerow}\term{Total current assets}&\term{114}&Long-term debt&360\\
+\term{Fixed assets}&&\term{Total liabilities}&\term{424}\\
+Property, plant \& equipment&530&\term{Shareholders' equity}&\term{98}\\
+\rowcolor{tablerow}Less accum. depreciation&122&&\\
+\term{Net tangible fixed assets}&\term{408}&&\\
+\rowcolor{highlight}\term{Total assets}&\term{522}&\term{Total liabilities \& equity}&\term{522}\\\hline
+\end{tabularx}}
+
+\minor{Income Statement}
+{\fontsize{7.8}{8.8}\selectfont\renewcommand{\arraystretch}{1.08}
+\arrayrulecolor{rulecolor}
+\begin{tabularx}{\linewidth}{@{}Y r@{}}
+\rowcolor{tablehead}\term{Line item}&\term{Amount}\\
+Net sales&720\\
+\rowcolor{tablerow}Cost of goods sold&590\\
+Selling, general \& administrative expense&40\\
+\rowcolor{tablerow}Depreciation&14\\
+\term{EBIT (earnings before interest and taxes)}&\term{76}\\
+\rowcolor{tablerow}Interest expense&27\\
+\term{Taxable income}&\term{49}\\
+\rowcolor{tablerow}Federal plus other taxes&17\\
+\rowcolor{highlight}\term{Net income}&\term{32}\\\hline
+\end{tabularx}}
+
+\major{Corporate Finance Theory}
+\minor{Ownership and Liability}
+A \term{corporation} is a separate legal entity. \term{Shareholders} own it;
+\term{managers} run it; the \term{board of directors} monitors management for shareholders.
+Shareholders have \term{limited liability} (no personal liability for corporate obligations).
+Corporations have an \term{unlimited lifespan}: share transfers do not end the business.
+A \term{sole proprietor} owns and controls the business alone; a \term{partnership} has at least two people. Both have \term{unlimited liability} in the course's framework.
+
+\minor{Investment vs Financing}
+\term{Investment:} which real assets to buy. \term{Financing:} how to fund them.
+\term{Capital structure:} mix of long-term debt and equity.
+\term{Real assets} produce goods / services; \term{financial assets} (stocks / bonds) claim income from real assets.
+Buying another company is an investment decision; issuing shares to pay for it is financing. One transaction can involve both.
+
+\minor{Agency and Governance}
+Managers are shareholders' \term{agents} but may pursue their own interests.
+\term{Agency costs:} value lost from these conflicts plus mitigation costs.
+Least likely in a sole proprietorship (owner = manager).
+\term{Executive incentives} and \term{corporate governance} help control conflicts:
+board oversight, legal requirements, activist shareholders, takeovers, and accounting / reporting standards.
+\term{Goal: maximise current shareholder wealth / market value}, not simply accounting profit.
+
+\minor{Accounting, Cash Flow and Tax}
+\term{Accrual accounting: profit \(\ne\) cash flow}; record transactions when earned / incurred, not when cash changes hands.
+Cash flows are \term{operating, investing, or financing}.
+\term{Marginal tax rate:} tax on the next dollar earned.
+\term{Average tax rate:} total tax / income.
+\end{minipage}}
+\showcheatcols
+\end{document}
