@@ -1,0 +1,365 @@
+% CS2105 finals cheatsheet -- monochrome, A4 landscape, three columns.
+% Link-layer foundations and Ethernet LANs occupy the first page.
+% Sources: Link Layer I and II. Remaining finals topics to be added.
+% Overleaf: upload this file and use the default pdfLaTeX compiler.
+% Self-contained: no external images, fonts or data files are required.
+
+\documentclass[a4paper,landscape,10pt]{article}
+% Change margin here; all column widths adjust automatically.
+\usepackage[margin=4mm,includefoot,footskip=9pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage{array,tabularx,booktabs}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{adjustbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{highlight}{gray}{.92}
+\definecolor{accent}{gray}{.12}
+\definecolor{ink}{gray}{0}
+\definecolor{panel}{gray}{.96}
+\definecolor{rulecolor}{gray}{.76}
+\definecolor{formula}{gray}{0}
+\definecolor{tablehead}{gray}{.90}
+\definecolor{tablerow}{gray}{.97}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.4pt}
+\setlength{\tabcolsep}{3pt}
+\setlength{\emergencystretch}{1em}
+\setlist[itemize]{label=\textbullet,leftmargin=8pt,labelsep=3pt,itemsep=1.05pt,topsep=1.8pt,parsep=0pt,partopsep=0pt}
+\setlist[enumerate]{leftmargin=10pt,labelsep=2pt,itemsep=1.05pt,topsep=1.8pt,parsep=0pt,partopsep=0pt}
+\setlist[itemize,2]{leftmargin=8pt,itemsep=.65pt,topsep=.8pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\major}[1]{\par\addvspace{5pt}\begingroup
+  \color{ink}\bfseries\fontsize{10.8}{11.8}\selectfont #1\par
+\vspace{2pt}{\color{rulecolor}\hrule height .4pt}\endgroup\nobreak\vspace{2.5pt}}
+\newcommand{\minor}[1]{\par\addvspace{4pt}{\color{accent}\bfseries\fontsize{8.8}{9.7}\selectfont #1}\par\nobreak\vspace{1pt}}
+\newcommand{\term}[1]{{\bfseries #1}}
+\newcommand{\eq}[1]{\par\begingroup\color{formula}\centering\vspace{1pt}
+  \begin{adjustbox}{max width=\linewidth}$\displaystyle #1$
+\end{adjustbox}\par\vspace{1.5pt}\endgroup}
+\newcommand{\keyeq}[1]{\par\begingroup\color{formula}\setlength{\fboxsep}{2.7pt}\centering\vspace{1pt}%
+  \colorbox{panel}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{%
+      \begin{adjustbox}{max width=\dimexpr\linewidth-4\fboxsep\relax}$\displaystyle #1$
+  \end{adjustbox}}}%
+\par\vspace{2pt}\endgroup}
+\newcommand{\txt}[1]{\text{#1}}
+\newcommand{\arr}{\(\rightarrow\)}
+\newcommand{\colfont}{\fontsize{8.2}{9.25}\selectfont\color{ink}\RaggedRight}
+\newsavebox{\leftcol}
+\newsavebox{\midcol}
+\newsavebox{\rightcol}
+\newcommand{\showcheatcols}{%
+  \typeout{COLUMN HEIGHTS: left=\the\dimexpr\ht\leftcol+\dp\leftcol\relax;
+    middle=\the\dimexpr\ht\midcol+\dp\midcol\relax;
+  right=\the\dimexpr\ht\rightcol+\dp\rightcol\relax}%
+\noindent\usebox{\leftcol}\hfill\usebox{\midcol}\hfill\usebox{\rightcol}\par}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[L]{\fontsize{6}{6.6}\selectfont\color{gray}\href{https://github.com/binghangc/Cheatsheets/tree/main/CS2105/Finals}{Source: github.com/binghangc/Cheatsheets}}
+\fancyfoot[R]{\fontsize{6}{6.6}\selectfont\color{gray}CS2105  /  FINALS\quad\thepage}
+\setlength{\footskip}{9pt}
+\AtBeginDocument{\colfont
+  \setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}}
+
+\begin{document}
+
+% PAGE 1 / COLUMN 1: fundamentals, random access, Ethernet calculations.
+\sbox{\leftcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Link Layer and Random Access}
+
+    \minor{1. Link-Layer Basics}
+    \begin{itemize}
+      \item \term{Scope:} one link between adjacent hosts/routers.
+        Encapsulate an IP datagram in a \term{frame}: header + payload +
+        trailer. Different hops may use different link protocols.
+      \item \term{Implementation:} NIC/adapter handles link + physical layers.
+      \item \term{Possible services:} framing, medium access, error
+        detection/correction, reliable delivery (especially on noisy wireless).
+        Detection may cause a drop/retransmission; correction repairs directly.
+    \end{itemize}
+
+    \minor{2. Shared Medium and MAC Goals}
+    \begin{itemize}
+      \item \term{Point-to-point:} dedicated link (PPP/SLIP); no multiple
+        access needed. \term{Broadcast:} shared channel; overlapping signals
+        at a receiver cause a \term{collision}.
+      \item \term{Ideal MAC:} collision-free; one active node gets rate
+        \(R\); \(M\) active nodes each average \(R/M\); decentralized.
+        Coordination must use the shared channel itself.
+      \item \term{Families:} random access (collisions + recovery);
+        taking turns (grants/token); partitioning (fixed time/frequency).
+    \end{itemize}
+
+    \minor{3. Random Access: ALOHA}
+    No carrier sensing; transmit at full \(R\). Let \(L\) be frame size (bits).
+    \par{\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.12}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{13mm}Y >{\raggedright\arraybackslash}p{18mm}@{}}
+        \rowcolor{tablehead}\term{Protocol}&\term{When to send}&\term{Max. efficiency}\\
+        \term{Slotted}&Equal frames; synchronized \(L/R\)-second slots.
+        Fresh frame starts at next slot.&\(1/e\approx37\%\)\\\hline
+        \rowcolor{tablerow}\term{Pure}&No slots/synchronization; fresh frame sends immediately.&\(1/(2e)\approx18\%\)\\\hline
+    \end{tabularx}}\par
+    \begin{itemize}
+      \item \term{Retry:} slotted: attempt each following slot with probability
+        \(p\); pure: wait one frame time, then retry probabilistically.
+      \item \term{Vulnerable period:} slotted \(L/R\); pure \(2L/R\).
+        Both are decentralized and fair in the long run; collisions waste time.
+    \end{itemize}
+    For \(N\) backlogged nodes attempting independently with probability \(p\):
+    \eq{P(\txt{one success})=Np(1-p)^{N-1},\qquad p_{\txt{best}}=1/N}
+    Slotted ALOHA wastes both idle and collided slots.
+
+    \minor{4. Random Access: CSMA and CSMA/CD}
+    \begin{itemize}
+      \item \term{CSMA: listen before sending.} Idle \arr\ send entire
+        frame; busy \arr\ defer. Propagation delay means two nodes may
+        both sense idle and still collide.
+      \item \term{CSMA/CD: also listen while sending.} Collision \arr\
+        abort + random backoff; saves the rest of the frame time.
+        Used on shared, half-duplex Ethernet. Neither requires equal frame sizes.
+    \end{itemize}
+
+    \term{Binary exponential backoff:} after \(m\) collisions
+    (\(m=1\): first), choose uniformly (lecture model):
+    \keyeq{K\in\{0,\ldots,2^m-1\},\qquad t_{\txt{wait}}=K\frac{512}{R}}
+    \term{Zero-based \(K\):} \(2^m\) choices.
+    \term{\(R\):} link transmission rate (bits/s).
+    One slot \(=512/R\) s (512 bit times);
+    at 10 Mbps, \(51.2\,\mu\mathrm{s}\)/slot.
+    \(m=1:\ K\in\{0,1\}\); \(m=2:\ K\in\{0,1,2,3\}\).
+    \(P(K=0)=2^{-m}\).
+    More collisions \arr\ larger window to adapt to heavier load.
+
+    \term{Minimum frame size:} sender must still transmit when the
+    worst-case collision returns. \(\tau\): max one-way propagation delay;
+    \(d\): network diameter; \(v\): signal speed.
+    \keyeq{\frac{L_{\min}}R\ge2\tau,\qquad L_{\min}\ge2R\tau=\frac{2Rd}{v}}
+    Ethernet: minimum 64 bytes = 512 bits. Higher rate/diameter
+    requires larger minimum frames.
+\end{minipage}}
+
+% PAGE 1 / COLUMN 2: scheduled access, error checks, CRC procedure.
+\sbox{\midcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Scheduled Access and Error Control}
+
+    \minor{5. Taking Turns and Channel Partitioning}
+    All four are collision-free and fair under normal operation.
+    \par{\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.12}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{14mm}Y Y@{}}
+        \rowcolor{tablehead}\term{Protocol}&\term{Allocation rule}&\term{Limit / overhead}\\
+        \term{Polling}&Master grants round-robin turns; frame limit per turn.&Polling delay; master is single point of failure.\\\hline
+        \rowcolor{tablerow}\term{Token}&Holder sends up to a limit, then passes; if idle, passes immediately.&Decentralized; token overhead/loss or node failure disrupts service.\\\hline
+        \term{TDMA}&Fixed time slot per node in each round (time frame).&Unused slots idle.\\\hline
+        \rowcolor{tablerow}\term{FDMA}&Fixed frequency band per node.&Unused bands idle.\\\hline
+    \end{tabularx}}\par
+    \term{Partitioning rates:} \(N\) assigned nodes \arr\ each capped at
+    \(R/N\), even alone; \(M\) active nodes \arr\ total \(MR/N\).
+
+    \minor{6. Error Detection and Correction}
+    Protect data \(D\) (possibly including headers) with \term{EDC} bits.
+    \term{No error detected $\ne$ error-free.}
+    \par{\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.12}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{15mm}Y@{}}
+        \rowcolor{tablehead}\term{Method}&\term{Construction and capability}\\
+        \term{Checksum}&One's complement of the 16-bit-word sum with end-around carry. TCP/UDP/IPv4 headers.\\\hline
+        \rowcolor{tablerow}\term{1-bit parity}&Extra bit makes total 1s even/odd. Detects any odd number of flips; misses even numbers; cannot correct.\\\hline
+        \term{2-D parity}&\(i\times j\) data bits + \(i+j+1\) row/column/corner parity bits. One bad row + column locates a single error: flip intersection. Detects any two data-bit errors; four rectangle-corner flips can escape.\\\hline
+    \end{tabularx}}\par
+
+    \minor{7. CRC: Compute, Transmit, Verify}
+    \term{Notation:} \(D\): data; \(G\): agreed \(r+1\)-bit generator;
+    \(C\): \(r\)-bit CRC (\(R\) in slides); \(\Vert\): concatenate.
+    \term{Modulo 2:} add/subtract with XOR; no carry/borrow.
+    \keyeq{C=\operatorname{rem}_G(D\,2^r),\qquad T=D\Vert C}
+    \begin{enumerate}
+      \item \term{Compute:} append \(r\) zeros to \(D\); XOR-divide by
+        \(G\). Align \(G\)'s leading 1 with the leftmost 1; XOR and repeat
+        until fewer than \(r+1\) bits remain.
+      \item \term{Transmit:} pad remainder to \(r\) bits; replace appended
+        zeros with it. Send \(T=D\Vert C\).
+      \item \term{Verify:} divide received frame by \(G\).
+        Nonzero remainder \arr\ error; zero \arr\ no error detected.
+    \end{enumerate}
+    \term{Worked results:} \(G=1001\), \(r=3\):
+    \par{\fontsize{7.3}{8.2}\selectfont\renewcommand{\arraystretch}{1.1}
+      \begin{tabularx}{\linewidth}{@{}Y Y Y@{}}
+        \rowcolor{tablehead}\term{Data \(D\)}&\term{CRC \(C\)}&\term{Sent \(D\Vert C\)}\\
+        \(101110\)&\(011\)&\(101110011\)\\
+        \rowcolor{tablerow}\(101100\)&\(001\)&\(101100001\)\\
+    \end{tabularx}}\par
+
+    \term{Detection guarantees:}
+    \begin{itemize}
+      \item Degree-\(r\) generator with constant term 1: detects all bursts
+        of length \(\le r\). Random longer bursts escape with probability
+        \(\approx2^{-r}\).
+      \item Detects all odd-weight errors \term{if \(x+1\) divides \(G(x)\)}.
+        CRC detects; it does not itself correct.
+    \end{itemize}
+    \term{Polynomial view:} \(110001\leftrightarrow x^5+x^4+1\) over GF(2).
+    Error \(E(x)\) escapes iff \(G(x)\mid E(x)\).
+    Hardware-efficient; used in Ethernet/Wi-Fi.
+
+\end{minipage}}
+
+% PAGE 1 / COLUMN 3: Ethernet and switching.
+\sbox{\rightcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{Ethernet and Switched LANs}
+
+    \minor{1. Ethernet Frame and Service}
+    \term{Frame:} \(\underbrace{8}_{\text{preamble}}\ |
+      \underbrace{6}_{D\text{ MAC}}\ |\underbrace{6}_{S\text{ MAC}}\ |
+      \underbrace{2}_{\text{type}}\ |\underbrace{46\text{--}1500}_{\text{data}}\ |
+    \underbrace{4}_{\text{CRC}}\) bytes.
+    \begin{itemize}
+      \item \term{Preamble:} 7 bytes \texttt{10101010} + start-of-frame byte
+        \texttt{10101011}; synchronizes clocks. \term{Type} multiplexes upper
+        protocols (IP, ARP, \ldots). CRC failure \arr\ frame dropped.
+      \item \term{MTU = 1500 B}; data is padded to 46 B minimum. Ethernet is
+        unreliable: no link-layer ACK/NAK; recovery, if any, is higher-layer
+        (e.g. TCP).
+      \item A NIC accepts a frame addressed to its MAC or broadcast; otherwise
+        it discards it. Modern switched full-duplex links have no collisions.
+    \end{itemize}
+
+    \minor{2. Hubs, Switches, and Routers}
+    \par{\fontsize{7.2}{8.1}\selectfont\renewcommand{\arraystretch}{1.1}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{13mm}Y Y@{}}
+        \rowcolor{tablehead}\term{Device}&\term{Works on}&\term{Effect}\\
+        \term{Hub}&Bits (L1)&Repeats every bit to all ports: one collision domain.\\\hline
+        \rowcolor{tablerow}\term{Switch}&Frames / MAC (L2)&Selectively forwards; ports are separate collision domains.\\\hline
+        \term{Router}&Datagrams / IP (L3)&Routes between subnets; removes and rebuilds each link frame.\\
+    \end{tabularx}}\par
+    \begin{itemize}
+      \item \term{Switch:} store-and-forward, transparent and plug-and-play.
+        Dedicated links allow simultaneous transmissions unless they contend
+        for the same output port. Inter-switch topology must be loop-free.
+      \item \term{Table entry:} \(\langle\text{MAC},\ \text{interface},\ \text{TTL}\rangle\).
+        On arrival, learn/update \(\langle S\text{ MAC},\text{incoming port}\rangle\);
+        old entries age out.
+      \item \term{Forwarding:} destination known on another port \arr\ forward
+        only there; known on incoming port \arr\ filter/drop; unknown \arr\ flood
+        all ports except incoming. (Broadcast is also flooded.)
+    \end{itemize}
+
+    \minor{3. MAC Address Essentials}
+    \begin{itemize}
+      \item Usually 48 bits (6 bytes), hexadecimal, e.g. \texttt{5C-F9-DD-E8-E3-D2};
+        typically burned into NIC ROM (sometimes software-settable). IEEE assigns
+        addresses; first 3 bytes identify vendor. Broadcast =
+        \texttt{FF-FF-FF-FF-FF-FF}.
+      \item MAC addresses operate \emph{only on the current link}; a router's
+        outgoing frame uses its own outgoing-interface MAC as source.
+    \end{itemize}
+
+    \minor{4. IP Address vs. MAC Address}
+    \par{\fontsize{6.9}{7.7}\selectfont\renewcommand{\arraystretch}{1.06}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{14mm}Y Y@{}}
+        \rowcolor{tablehead}&\term{IP address}&\term{MAC address}\\
+        \term{Layer / size}&Network (L3), IPv4: 32 bits&Link (L2), normally 48 bits\\\hline
+        \rowcolor{tablerow}\term{Job}&Routes datagram to final destination&Delivers frame to next hop on one link\\\hline
+        \term{Structure}&Hierarchical: subnet prefix + host ID&Flat NIC/adapter identifier\\\hline
+        \rowcolor{tablerow}\term{Lifetime}&Logical; can be dynamically assigned&Usually hardware-associated; normally stable\\
+      \end{tabularx}}\par
+    \term{At every router:} the IP datagram keeps its end-host addresses;
+    the incoming frame is removed and a new frame is built. MAC source and
+    destination therefore change at every routed hop.
+
+    \minor{5. ARP: Local IP \arr MAC}
+    \term{ARP} caches \(\langle\text{IP},\text{MAC},\text{TTL}\rangle\) mappings
+    within a subnet. \term{Cache hit:} send the data frame immediately.
+    \term{Miss/expired:} broadcast ``Who has target IP?'' to
+    \texttt{FF-FF-FF-FF-FF-FF}; only the target unicasts its MAC reply.
+    Cache the reply, then send. ARP broadcasts never cross a router.
+\end{minipage}}
+\showcheatcols
+
+% PAGE 2 / COLUMN 1: ARP and routed forwarding continuation.
+\newpage
+\sbox{\leftcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \major{ARP Forwarding Scenarios}
+
+    \minor{1. Which MAC Should I Resolve?}
+    Use the local prefix/mask to classify the IP destination.
+    \par{\fontsize{7.15}{8.05}\selectfont\renewcommand{\arraystretch}{1.12}
+      \arrayrulecolor{rulecolor}
+      \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{19mm}Y@{}}
+        \rowcolor{tablehead}\term{Destination}&\term{ARP target / Ethernet destination}\\
+        \term{Same subnet}&Destination host's IP / destination host's MAC\\\hline
+        \rowcolor{tablerow}\term{Different subnet}&Default gateway (next-hop router interface) IP / gateway MAC --- \emph{not} the remote host's MAC\\
+    \end{tabularx}}\par
+
+    \minor{2. Same Subnet: A Sends to B}
+    \term{Datagram:} IP src = A, IP dst = B.  \term{Frame:} MAC src = A,
+    MAC dst = B.
+    \begin{enumerate}
+      \item \term{B in A's ARP cache:} A immediately encapsulates the
+        A-to-B datagram in a frame to B's cached MAC. Other NICs ignore it;
+        B accepts it.
+      \item \term{B absent/expired:} A broadcasts ``Who has IP(B)?''; B
+        unicasts its MAC to A; A caches it, then performs step 1.
+    \end{enumerate}
+
+    \minor{3. Different Subnets: A Sends to B}
+    \term{Core rule:} A puts \emph{B's IP} in the datagram, but targets the
+    first frame at \emph{R's local-interface MAC}. A must never put B's remote
+    MAC in that first frame: B is not on A's Ethernet link.
+    \begin{enumerate}
+      \item A recognizes IP(B) is off-subnet; next hop is default gateway R.
+      \item \term{R MAC cached:} send frame \([\text{MAC }A\rightarrow R]\) carrying
+        datagram \([\text{IP }A\rightarrow B]\). \term{R MAC not cached:} ARP for
+        R's local-interface IP, cache its reply, then send that frame.
+      \item R accepts the frame, strips its Ethernet header/trailer, examines
+        the IP destination B, and selects its outgoing interface/next hop.
+      \item On R's outgoing link, R ARPs (if necessary) for the \emph{next
+        hop}: B itself only if directly connected, otherwise the next router.
+      \item R emits a new frame: MAC src = R's outgoing-interface MAC;
+        MAC dst = resolved next-hop MAC. The IP datagram remains IP A \arr B
+        (apart from normal IP forwarding changes such as TTL).
+      \item Each later router repeats steps 3--5. On B's LAN, the last router
+        resolves B's MAC, frames to B, and B receives the original datagram.
+    \end{enumerate}
+
+    \minor{Fast Exam Check}
+    \begin{itemize}
+      \item \term{ARP broadcast stays local:} routers do not forward it across
+        subnets.
+      \item \term{MAC destination = next hop on this link}; \term{IP
+        destination = final host}. MACs change every routed hop; IP endpoints do not.
+      \item Switches use the frame's MAC destination; routers use the datagram's
+        IP destination. ARP is carried in an Ethernet frame (Type = ARP).
+    \end{itemize}
+\end{minipage}}
+
+% PAGE 2 / remaining columns: reserved for later finals topics.
+\sbox{\midcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \mbox{}
+  \end{minipage}}
+\sbox{\rightcol}{
+  \begin{minipage}[t]{\dimexpr(\textwidth-9mm)/3\relax}\colfont\vspace{0pt}
+    \mbox{}
+\end{minipage}}
+\showcheatcols
+
+\end{document}
